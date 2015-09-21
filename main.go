@@ -52,9 +52,14 @@ func healthCheck() {
 		json.Unmarshal(body, &data)
 
 		for _, unit := range data.States {
+			var unitState string
 			if unit.SystemdSubState != "running" {
-				unitDown := color.YellowString(unit.Name)
-				unitState := color.RedString(unit.SystemdSubState)
+				unitDown := color.CyanString(unit.Name)
+				if unit.SystemdSubState == "failed" {
+					unitState = color.RedString(unit.SystemdSubState)
+				} else {
+					unitState = color.YellowString(unit.SystemdSubState)
+				}
 
 				fmt.Println(unitDown + " : " + unitState)
 			}
