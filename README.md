@@ -7,6 +7,13 @@ To do so on CoreOS look at :
 
 https://coreos.com/fleet/docs/latest/deployment-and-configuration.html
 
+The easiest way to get quickly up and running is to use the docker image
+
+```
+docker pull daemonza/fleethealth:latest
+docker run -e FH_FLEET_API=<ip>:<port> -e FH_CHECK_INTERVAL=30 daemonza/fleethealth:latest
+```
+
 Environment settings :
 
 The ip/hostname and port of your fleet service. Default to 127.0.0.1 if empty
