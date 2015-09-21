@@ -1,5 +1,8 @@
 package main
 
+// TODO :
+// * add graceful shutdown
+
 import (
 	"encoding/json"
 	"fmt"
@@ -8,6 +11,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 // FleetState is a struct for the fleet api json
@@ -48,7 +53,10 @@ func healthCheck() {
 
 		for _, unit := range data.States {
 			if unit.SystemdSubState != "running" {
-				fmt.Println(unit.Name + " : " + unit.SystemdSubState)
+				unitDown := color.YellowString(unit.Name)
+				unitState := color.RedString(unit.SystemdSubState)
+
+				fmt.Println(unitDown + " : " + unitState)
 			}
 		}
 	}
@@ -60,7 +68,6 @@ func main() {
 		// Connect to fleet api and get unit list state
 		healthCheck()
 
-		// sleep
 		interval, err := strconv.Atoi(os.Getenv("FH_CHECK_INTERVAL"))
 		// if FH_CHECK_INTERVAL is not set default to 5 secs
 		if err != nil {

@@ -2,6 +2,7 @@
 
 For Fleet Health to work your fleet server, needs to have it's
 API enabled.
+
 To do so on CoreOS look at :
 
 https://coreos.com/fleet/docs/latest/deployment-and-configuration.html
